@@ -7150,8 +7150,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  effect@3.10.8:
-    resolution: {integrity: sha512-vCKKp7EL6j7x1xfBbmndcQvooNE5FEDxkVro2yqEGBR2Ogn4I4XVK5A4eLVlDxS9egvX7EFaBwDRfm7k6IM6oA==}
+  effect@3.10.9:
+    resolution: {integrity: sha512-nNRknWPKCBDvAfsoJ/XsxTvIsN9mRdnM02AD6SMPGmHE3dIpnG1lTC/3ywjSYtU7YtBhFV64s2KKaDzdIU8p4Q==}
 
   ejs@3.1.10:
     resolution: {integrity: sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==}
@@ -7380,8 +7380,8 @@ packages:
     resolution: {integrity: sha512-hMQ4CX1p1izmuLYyZqLMO/qGNw10wSv9QDCPfzXfyFrOaCSSoRfqE1Kf1s5an66J5JZC62NewG+mK49jOCtQew==}
     engines: {node: '>=4'}
 
-  fast-check@3.22.0:
-    resolution: {integrity: sha512-8HKz3qXqnHYp/VCNn2qfjHdAdcI8zcSqOyX64GOMukp7SL2bfzfeDKjSd+UyECtejccaZv3LcvZTm9YDD22iCQ==}
+  fast-check@3.23.1:
+    resolution: {integrity: sha512-u/MudsoQEgBUZgR5N1v87vEgybeVYus9VnDVaIkxkkGP2jt54naghQ3PCQHJiogS8U/GavZCUPFfx3Xkp+NaHw==}
     engines: {node: '>=8.0.0'}
 
   fast-deep-equal@3.1.3:
@@ -8472,8 +8472,8 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lru-cache@11.0.1:
-    resolution: {integrity: sha512-CgeuL5uom6j/ZVrg7G/+1IXqRY8JXX4Hghfy5YE0EhoYQWvndP1kufu58cmZLNIDKnRhZrXfdS9urVWx98AipQ==}
+  lru-cache@11.0.2:
+    resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
     engines: {node: 20 || >=22}
 
   lru-cache@5.1.1:
@@ -10437,8 +10437,8 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
-  sugar-high@0.7.4:
-    resolution: {integrity: sha512-dG0B/JbpFVW3D7BiaNLUi1NTYN7+gzYMPBOJJDsfwDWbe2S9g+ftfKBmooeIdNCMb1O19YSqFeVUXl3ykuHKYA==}
+  sugar-high@0.7.5:
+    resolution: {integrity: sha512-lfGxo0il0Mx4WLdXEt0WsJ8V3QkQWssXnolj5xBurzlGJW07LuwmJWKtS0B2WJ5XWz1439RHngXAmzsnLD0rFA==}
 
   superstruct@1.0.4:
     resolution: {integrity: sha512-7JpaAoX2NGyoFlI9NBh66BQXGONc+uE+MRS5i2iOBKuS4e+ccgMDjATgZldkah+33DakBxDHiss9kvUcGAO8UQ==}
@@ -14110,7 +14110,7 @@ snapshots:
       ast-types: 0.14.2
       cli-high: 0.4.3
       diff: 5.2.0
-      effect: 3.10.8
+      effect: 3.10.9
       nanoid: 5.0.8
       recast: 0.23.9
       xycolors: 0.1.2
@@ -18058,7 +18058,7 @@ snapshots:
   cli-high@0.4.3:
     dependencies:
       '@clack/prompts': 0.7.0
-      sugar-high: 0.7.4
+      sugar-high: 0.7.5
       xycolors: 0.1.2
       yargs: 17.7.2
 
@@ -18577,9 +18577,9 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  effect@3.10.8:
+  effect@3.10.9:
     dependencies:
-      fast-check: 3.22.0
+      fast-check: 3.23.1
 
   ejs@3.1.10:
     dependencies:
@@ -19044,7 +19044,7 @@ snapshots:
       iconv-lite: 0.4.24
       tmp: 0.0.33
 
-  fast-check@3.22.0:
+  fast-check@3.23.1:
     dependencies:
       pure-rand: 6.1.0
 
@@ -20357,7 +20357,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lru-cache@11.0.1: {}
+  lru-cache@11.0.2: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -21144,7 +21144,7 @@ snapshots:
 
   path-scurry@2.0.0:
     dependencies:
-      lru-cache: 11.0.1
+      lru-cache: 11.0.2
       minipass: 7.1.2
 
   path-to-regexp@0.1.10: {}
@@ -22825,7 +22825,7 @@ snapshots:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
-  sugar-high@0.7.4: {}
+  sugar-high@0.7.5: {}
 
   superstruct@1.0.4: {}
 
