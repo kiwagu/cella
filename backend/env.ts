@@ -46,6 +46,7 @@ export const env = createEnv({
   },
   runtimeEnv: isCloudflare
     ? // Cloudflare Workers pass environment variables via the `env` parameter
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       (globalThis as any).ENV
     : // For Node.js, use `process.env`
       process.env,
