@@ -16,7 +16,6 @@ import { githubAuth, googleAuth, microsoftAuth } from '#/db/lucia';
 
 import { createSession, findOauthAccount, getRedirectUrl, slugFromEmail, splitFullName, updateExistingUser } from './helpers/oauth';
 
-import { getRandomValues } from 'node:crypto';
 import { config } from 'config';
 import type { z } from 'zod';
 import { db } from '#/db/db';
@@ -29,7 +28,7 @@ import { errorResponse } from '#/lib/errors';
 import { i18n } from '#/lib/i18n';
 import { emailSender } from '#/lib/mailer';
 import { logEvent } from '#/middlewares/logger/log-event';
-import { hashPasswordWithArgon, verifyPasswordWithArgon } from '#/modules/auth/helpers/argon2id';
+import { hashPassword, verifyPassword } from '#/modules/auth/helpers/argon2id';
 import { CustomHono, type EnabledOauthProviderOptions } from '#/types/common';
 import { nanoid } from '#/utils/nanoid';
 import generalRouteConfig from '../general/routes';
@@ -106,7 +105,7 @@ const authRoutes = app
       tokenData = data?.data;
     }
 
-    const hashedPassword = await hashPasswordWithArgon(password);
+    const hashedPassword = await hashPassword(password);
     const userId = nanoid();
 
     const slug = slugFromEmail(email);
@@ -287,7 +286,7 @@ const authRoutes = app
     await auth.invalidateUserSessions(user.id);
 
     // hash password
-    const hashedPassword = await hashPasswordWithArgon(password);
+    const hashedPassword = await hashPassword(password);
 
     // update user password and set email verified
     await db.update(usersTable).set({ hashedPassword, emailVerified: true }).where(eq(usersTable.id, user.id));
@@ -327,7 +326,7 @@ const authRoutes = app
     if (!user) return errorResponse(ctx, 404, 'not_found', 'warn', 'user');
     if (!user.hashedPassword) return errorResponse(ctx, 404, 'no_password_found', 'warn');
 
-    const validPassword = await verifyPasswordWithArgon(user.hashedPassword, password);
+    const validPassword = await verifyPassword(user.hashedPassword, password);
 
     if (!validPassword) return errorResponse(ctx, 400, 'invalid_password', 'warn');
 
@@ -835,7 +834,7 @@ const authRoutes = app
    */
   .openapi(authRoutesConfig.getPasskeyChallenge, async (ctx) => {
     // Generate a random challenge
-    const challenge = getRandomValues(new Uint8Array(32));
+    const challenge = crypto.getRandomValues(new Uint8Array(32));
     // Convert to string
     const challengeBase64 = encodeBase64(challenge);
     setCookie(ctx, 'challenge', challengeBase64);

@@ -2,7 +2,7 @@ import { config } from 'config';
 import { db } from '#/db/db';
 import { usersTable } from '#/db/schema/users';
 
-import { hashPasswordWithArgon } from '#/modules/auth/helpers/argon2id';
+import { hashPassword } from '#/modules/auth/helpers/argon2id';
 import { generateUnsubscribeToken } from '#/modules/users/helpers/unsubscribe-token';
 
 export const adminUser = {
@@ -30,8 +30,8 @@ export const userSeed = async () => {
       language: config.defaultLanguage,
       slug: 'admin-user',
       role: 'admin',
-      unsubscribeToken: generateUnsubscribeToken(adminUser.email),
-      hashedPassword: await hashPasswordWithArgon(adminUser.password),
+      unsubscribeToken: await generateUnsubscribeToken(adminUser.email),
+      hashedPassword: await hashPassword(adminUser.password),
     })
     .onConflictDoNothing();
 

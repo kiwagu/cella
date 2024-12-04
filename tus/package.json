@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "TUS server to handle file uploading with imado",
   "type": "module",
+  "engines": {
+    "node": ">=20.14.0 <23.0.0"
+  },
   "scripts": {
     "build": "NODE_ENV=production tsup",
     "build:dev": "NODE_ENV=development tsup",

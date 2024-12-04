@@ -1,35 +1,22 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createEnv } from '@t3-oss/env-core';
-import { config } from 'config';
-import { config as dotenvConfig } from 'dotenv';
 import { z } from 'zod';
 
-// Check if .env file exists
-const isEnvFileExists = existsSync('.env');
-if (!isEnvFileExists && config.mode === 'development') {
-  const isExampleEnvFileExists = existsSync('.env.example');
-  if (!isExampleEnvFileExists) {
-    throw new Error('Please create a .env file');
-  }
-  const exampleEnvFile = readFileSync('.env.example');
-  writeFileSync('.env', exampleEnvFile);
-  console.info('Created .env file');
-}
-dotenvConfig();
+// Helper to determine the environment
+const isCloudflare = typeof globalThis.fetch !== 'undefined';
 
 export const env = createEnv({
   server: {
     PGLITE: z
       .string()
-      .optional()
+      .default('true')
       .transform((v) => v === 'true'),
-    DATABASE_URL: z.string().url(),
-    NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
+    DATABASE_URL: z.string().url().default("postgres://postgres:postgres@0.0.0.0:5432/postgres"),
+    NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]).default("development"),
     PORT: z.string().optional(),
-    UNSUBSCRIBE_TOKEN_SECRET: z.string(),
+    UNSUBSCRIBE_TOKEN_SECRET: z.string().default('secret'),
 
-    ARGON_SECRET: z.string(),
-    REMOTE_SYSTEM_ACCESS_IP: z.string(),
+    ARGON_SECRET: z.string().default('secret'),
+    REMOTE_SYSTEM_ACCESS_IP: z.string().default("*"),
 
     NOVU_API_KEY: z.string().optional(),
     NOVU_SUB_ID: z.string().optional(),
@@ -57,6 +44,10 @@ export const env = createEnv({
     AWS_CLOUDFRONT_PRIVATE_KEY: z.string().default(''),
     TUS_UPLOAD_API_SECRET: z.string().default('very_secret'),
   },
-  runtimeEnv: process.env,
+  runtimeEnv: isCloudflare
+    ? // Cloudflare Workers pass environment variables via the `env` parameter
+      (globalThis as any).ENV
+    : // For Node.js, use `process.env`
+      process.env,
   emptyStringAsUndefined: true,
 });

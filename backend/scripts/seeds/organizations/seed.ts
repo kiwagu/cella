@@ -9,7 +9,7 @@ import { nanoid } from '#/utils/nanoid';
 import { type InsertMembershipModel, membershipsTable } from '#/db/schema/memberships';
 import { type InsertOrganizationModel, organizationsTable } from '#/db/schema/organizations';
 import { type InsertUserModel, usersTable } from '#/db/schema/users';
-import { hashPasswordWithArgon } from '#/modules/auth/helpers/argon2id';
+import { hashPassword } from '#/modules/auth/helpers/argon2id';
 import { generateUnsubscribeToken } from '#/modules/users/helpers/unsubscribe-token';
 import type { Status } from '../progress';
 import { adminUser } from '../user/seed';
@@ -52,7 +52,8 @@ export const organizationsSeed = async (progressCallback?: (stage: string, count
 
   await db.insert(organizationsTable).values(organizations).onConflictDoNothing();
 
-  const hashedPassword = await hashPasswordWithArgon('12345678');
+  const hashedPassword = await hashPassword('12345678');
+  if (!hashedPassword) return;
 
   const usersSlugUniqueEnforcer = new UniqueEnforcer();
   const usersEmailUniqueEnforcer = new UniqueEnforcer();
@@ -68,7 +69,7 @@ export const organizationsSeed = async (progressCallback?: (stage: string, count
     organizationsCount++;
     if (progressCallback) progressCallback('organizations', organizationsCount, 'inserting');
 
-    const insertUsers: InsertUserModel[] = Array.from({ length: MEMBERS_COUNT }).map(() => {
+    const insertUsers: InsertUserModel[] = await Promise.all(Array.from({ length: MEMBERS_COUNT }).map(async () => {
       const firstName = faker.person.firstName();
       const lastName = faker.person.lastName();
       const firstAndLastName = { firstName, lastName };
@@ -88,13 +89,13 @@ export const organizationsSeed = async (progressCallback?: (stage: string, count
         language: config.defaultLanguage,
         name,
         email,
-        unsubscribeToken: generateUnsubscribeToken(email),
+        unsubscribeToken: await generateUnsubscribeToken(email),
         hashedPassword,
         slug,
         avatarUrl: null,
         createdAt: faker.date.past(),
       };
-    });
+    }));
 
     usersCount += insertUsers.length;
     if (progressCallback) progressCallback('users', usersCount, 'inserting');

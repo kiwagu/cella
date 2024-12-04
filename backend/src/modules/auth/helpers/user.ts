@@ -41,7 +41,7 @@ export const handleCreateUser = async (
         emailVerified: data.emailVerified,
         email: data.email.toLowerCase(),
         name: data.name,
-        unsubscribeToken: generateUnsubscribeToken(data.email),
+        unsubscribeToken: await generateUnsubscribeToken(data.email),
         language: config.defaultLanguage,
         hashedPassword: data.hashedPassword,
       })
