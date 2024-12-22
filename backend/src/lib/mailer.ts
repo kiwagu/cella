@@ -25,8 +25,8 @@ if (env.NODEMAILER_ON) {
       to: env.SEND_ALL_TO_EMAIL,
       replyTo: config.supportEmail,
       from: config.notificationsEmail,
-      subject: 'Nodemon is running',
-      html: '<h1>Nodemon started</h1>',
+      subject: 'Nodemailer is running',
+      html: '<h1>Nodemailer started</h1>',
     });
   }
 } else {
