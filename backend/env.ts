@@ -17,12 +17,14 @@ if (!isEnvFileExists && config.mode === 'development') {
 }
 dotenvConfig();
 
+const booleanSchema = z
+  .string()
+  .optional()
+  .transform((v) => v === 'true');
+
 export const env = createEnv({
   server: {
-    PGLITE: z
-      .string()
-      .optional()
-      .transform((v) => v === 'true'),
+    PGLITE: booleanSchema,
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
     PORT: z.string().optional(),
@@ -34,6 +36,14 @@ export const env = createEnv({
     NOVU_API_KEY: z.string().optional(),
     NOVU_SUB_ID: z.string().optional(),
     NOVU_SLACK_WEBHOOK: z.string().optional(),
+
+    NODEMAILER_ON: booleanSchema,
+    NODEMAILER_HOST: z.string().optional().default(''),
+    NODEMAILER_PORT: z.string().optional().default(''),
+    NODEMAILER_SECURE: booleanSchema,
+    NODEMAILER_AUTH_USER: z.string().optional().default(''),
+    NODEMAILER_AUTH_PASS: z.string().optional().default(''),
+    NODEMAILER_STARTED_MSG: booleanSchema,
 
     SEND_ALL_TO_EMAIL: z.string().optional(),
     SENDGRID_API_KEY: z.string().optional(),
