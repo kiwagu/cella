@@ -185,6 +185,15 @@ export const config = {
     countries: ['fr', 'de', 'nl', 'ua', 'us', 'gb'],
     timezones: [],
   },
+  nodemailer: {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false, // true for port 465, false for other ports
+    auth: {
+      user: 'maddison53@ethereal.email',
+      pass: 'jn7jnAPss4f63QBp6D',
+    },
+  },
 };
 
 export default config;
